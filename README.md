@@ -4,4 +4,4 @@
 ###### Usage:
     - composer require kovey/logger
 ###### Run All Test:
-    - /path/to/vendor/bin/phpunit --bootstrap=/path/to/vendor/autoload.php /path/to/tests
+    - php /path/to/tests/test.php --bootstrap=/path/to/vendor/autoload.php /path/to/tests
