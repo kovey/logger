@@ -1,0 +1,32 @@
+{
+    "name": "kovey/logger",
+    "type": "library",
+    "description": "Logger Of The Kovey Framework",
+    "keywords": [
+        "framework",
+        "kovey",
+        "logger",
+        "php"
+    ],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Kovey",
+            "email": "kovey@vip.qq.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-json": ">=1.0",
+        "ext-swoole": ">=4.5.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kovey\\Logger\\": "src/"
+        }
+    }
+}
