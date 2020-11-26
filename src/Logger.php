@@ -42,6 +42,13 @@ class Logger
     private static string $warningPath;
 
     /**
+     * @description Busi log
+     *
+     * @var string
+     */
+    private static string $busiPath;
+
+    /**
      * @description 日志分类
      *
      * @var string
@@ -61,7 +68,7 @@ class Logger
      *
      * @return null
      */
-    public static function setLogPath(string $info, string $exception, string $error, string $warning)
+    public static function setLogPath(string $info, string $exception, string $error, string $warning, string $busiPath = '')
     {
         self::$infoPath = $info;
         if (!is_dir($info)) {
@@ -81,6 +88,13 @@ class Logger
         self::$warningPath = $warning;
         if (!is_dir($warning)) {
             mkdir($warning, 0777, true);
+        }
+
+        if (!empty($busiPath)) {
+            self::$busiPath = $busiPath;
+            if (!is_dir($busiPath)) {
+                mkdir($busiPath, 0777, true);
+            }
         }
     }
 
@@ -226,5 +240,39 @@ class Logger
     public static function setCategory(string $category)
     {
         self::$category = $category;
+    }
+
+    /**
+     * @description 写入业务异常日志
+     *
+     * @param int $line
+     *
+     * @param string $file
+     *
+     * @param Array | Throwable $e
+     *
+     * @param string $traceId
+     *
+     * @return Array
+     */
+    public static function writeBusiException(int $line, string $file, \Throwable $e, string $traceId = '')
+    {
+        go (function (int $line, string $file, \Throwable $e, string $traceId) {
+            $content = array(
+                'time' => date('Y-m-d H:i:s'),
+                'category' => self::$category,
+                'type' => 'BusiException',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'line' => $line,
+                'file' => $file,
+                'traceId' => $traceId
+            );
+            file_put_contents(
+                self::$exceptionPath . '/' . date('Y-m-d') . '.log',
+                json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL,
+                FILE_APPEND
+            );
+        }, $line, $file, $e, $traceId);
     }
 }
