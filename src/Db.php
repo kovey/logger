@@ -13,35 +13,35 @@ namespace Kovey\Logger;
 
 class Db
 {
-	/**
-	 * @description 日志mulu
-	 *
-	 * @var string
-	 */
-	private static string $logDir;
+    /**
+     * @description 日志mulu
+     *
+     * @var string
+     */
+    private static string $logDir;
 
-	/**
-	 * @description 设置日志目录
-	 *
-	 * @param string $logDir
-	 */
-	public static function setLogDir(string $logDir)
-	{
-		self::$logDir = $logDir;
-		if (!is_dir($logDir)) {
-			mkdir($logDir, 0777, true);
-		}
-	}
+    /**
+     * @description 设置日志目录
+     *
+     * @param string $logDir
+     */
+    public static function setLogDir(string $logDir)
+    {
+        self::$logDir = $logDir;
+        if (!is_dir($logDir)) {
+            mkdir($logDir, 0777, true);
+        }
+    }
 
-	/**
-	 * @description 写入日志
-	 *
-	 * @param string $sql
-	 *
-	 * @param float $spentTime
-	 */
-	public static function write(string $sql, float $spentTime)
-	{
+    /**
+     * @description 写入日志
+     *
+     * @param string $sql
+     *
+     * @param float $spentTime
+     */
+    public static function write(string $sql, float $spentTime)
+    {
         go (function (string $sql, float $spentTime) {
             $spentTime = round($spentTime * 1000, 2) . 'ms';
             $content = array(
@@ -55,5 +55,5 @@ class Db
                 FILE_APPEND
             );
         }, $sql, $spentTime);
-	}
+    }
 }
