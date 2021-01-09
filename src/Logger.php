@@ -275,4 +275,36 @@ class Logger
             );
         }, $line, $file, $e, $traceId);
     }
+
+    /**
+     * @description 写入警告日志 sync
+     *
+     * @param int $line
+     *
+     * @param string $file
+     *
+     * @param string | Array $msg
+     *
+     * @param string $traceId
+     *
+     * @return void
+     */
+    public static function writeWarningLogSync(int $line, string $file, string | Array $msg, string $traceId = '')
+    {
+        $content = array(
+            'time' => date('Y-m-d H:i:s'),
+            'category' => self::$category,
+            'type' => 'Warning',
+            'message' => $msg,
+            'trace' => '',
+            'line' => $line,
+            'file' => $file,
+            'traceId' => $traceId
+        );
+        file_put_contents(
+            self::$warningPath . '/' . date('Y-m-d') . '.log',
+            json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
+            FILE_APPEND
+        );
+    }
 }
