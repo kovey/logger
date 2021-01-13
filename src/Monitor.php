@@ -29,9 +29,9 @@ class Monitor
      */
     public static function setLogDir(string $logDir)
     {
-        self::$logDir = $logDir;
-        if (!is_dir($logDir)) {
-            mkdir($logDir, 0777, true);
+        self::$logDir = $logDir . '/monitor';
+        if (!is_dir(self::$logDir)) {
+            mkdir(self::$logDir, 0777, true);
         }
     }
 

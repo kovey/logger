@@ -58,43 +58,35 @@ class Logger
     /**
      * @description 设置日志路径
      *
-     * @param string $info
-     *
-     * @param string $exception
-     *
-     * @param string $error
-     *
-     * @param string $warning
+     * @param string $dir
      *
      * @return null
      */
-    public static function setLogPath(string $info, string $exception, string $error, string $warning, string $busiPath = '')
+    public static function setLogPath(string $dir)
     {
-        self::$infoPath = $info;
-        if (!is_dir($info)) {
-            mkdir($info, 0777, true);
+        self::$infoPath = $dir . '/info';
+        if (!is_dir(self::$infoPath)) {
+            mkdir(self::$infoPath, 0777, true);
         }
 
-        self::$exceptionPath = $exception;
-        if (!is_dir($exception)) {
-            mkdir($exception, 0777, true);
+        self::$exceptionPath = $dir . '/exception';
+        if (!is_dir(self::$exceptionPath)) {
+            mkdir(self::$exceptionPath, 0777, true);
         }
 
-        self::$errorPath = $error;
-        if (!is_dir($error)) {
-            mkdir($error, 0777, true);
+        self::$errorPath = $dir . '/error';
+        if (!is_dir(self::$errorPath)) {
+            mkdir(self::$errorPath, 0777, true);
         }
 
-        self::$warningPath = $warning;
-        if (!is_dir($warning)) {
-            mkdir($warning, 0777, true);
+        self::$warningPath = $dir . '/warning';
+        if (!is_dir(self::$warningPath)) {
+            mkdir(self::$warningPath, 0777, true);
         }
 
-        if (!empty($busiPath)) {
-            self::$busiPath = $busiPath;
-            if (!is_dir($busiPath)) {
-                mkdir($busiPath, 0777, true);
-            }
+        self::$busiPath = $dir . '/busi_exception';
+        if (!is_dir(self::$busiPath)) {
+            mkdir(self::$busiPath, 0777, true);
         }
     }
 
@@ -269,7 +261,7 @@ class Logger
                 'traceId' => $traceId
             );
             file_put_contents(
-                self::$exceptionPath . '/' . date('Y-m-d') . '.log',
+                self::$busiPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL,
                 FILE_APPEND
             );

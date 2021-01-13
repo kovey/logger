@@ -27,7 +27,7 @@ class Db
      */
     public static function setLogDir(string $logDir)
     {
-        self::$logDir = $logDir;
+        self::$logDir = $logDir . '/db';
         if (!is_dir($logDir)) {
             mkdir($logDir, 0777, true);
         }

@@ -18,7 +18,7 @@ class LoggerTest extends TestCase
 {
     public function testDbSetDir()
     {
-        Logger::setLogPath(__DIR__ . '/log/info', __DIR__ . '/log/exception', __DIR__ . '/log/error', __DIR__ . '/log/warning');
+        Logger::setLogPath(__DIR__ . '/log');
         $this->assertTrue(is_dir(__DIR__ . '/log'));
         $this->assertTrue(is_dir(__DIR__ . '/log/info'));
         $this->assertTrue(is_dir(__DIR__ . '/log/exception'));
@@ -28,7 +28,7 @@ class LoggerTest extends TestCase
 
     public function testWrite()
     {
-        Logger::setLogPath(__DIR__ . '/log/info', __DIR__ . '/log/exception', __DIR__ . '/log/error', __DIR__ . '/log/warning');
+        Logger::setLogPath(__DIR__ . '/log');
         Logger::setCategory('kovey');
         $traceId = md5('123456');
         Logger::writeInfoLog(1, 'test.php', 'kovey framework', $traceId);
