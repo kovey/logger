@@ -35,8 +35,8 @@ class DbTest extends TestCase
 
     public static function tearDownAfterClass() : void
     {
-        if (is_file(__DIR__ . '/log/' . date('Y-m-d') . '.log')) {
-            unlink(__DIR__ . '/log/' . date('Y-m-d') . '.log');
+        if (is_file(__DIR__ . '/log/db/' . date('Y-m-d') . '.log')) {
+            unlink(__DIR__ . '/log/db/' . date('Y-m-d') . '.log');
         }
         if (is_dir(__DIR__ . '/log/db')) {
             rmdir(__DIR__ . '/log/db');

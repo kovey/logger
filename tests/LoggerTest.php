@@ -96,6 +96,12 @@ class LoggerTest extends TestCase
         if (is_dir(__DIR__ . '/log/error')) {
             rmdir(__DIR__ . '/log/error');
         }
+        if (is_file(__DIR__ . '/log/busi_exception/' . date('Y-m-d') . '.log')) {
+            unlink(__DIR__ . '/log/busi_exception/' . date('Y-m-d') . '.log');
+        }
+        if (is_dir(__DIR__ . '/log/busi_exception')) {
+            rmdir(__DIR__ . '/log/busi_exception');
+        }
         if (is_dir(__DIR__ . '/log')) {
             rmdir(__DIR__ . '/log');
         }
