@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @description 监控日志
+ * @description monitor logger manager
  *
  * @package     Library\Monitor
  *
@@ -14,20 +14,20 @@ namespace Kovey\Logger;
 class Monitor
 {
     /**
-     * @description 日志目录
+     * @description logger directory
      *
      * @var string
      */
     private static string $logDir;
 
     /**
-     * @description 设置日志目录
+     * @description set logger directory
      *
      * @param string $logDir
      *
-     * @return null
+     * @return void
      */
-    public static function setLogDir(string $logDir)
+    public static function setLogDir(string $logDir) : void
     {
         self::$logDir = $logDir . '/monitor';
         if (!is_dir(self::$logDir)) {
@@ -36,13 +36,13 @@ class Monitor
     }
 
     /**
-     * @description 写入日志
+     * @description write logger content into file
      *
      * @param Array $content
      *
-     * @return null
+     * @return void
      */
-    public static function write(Array $content)
+    public static function write(Array $content) : void
     {
         go (function (Array $content) {
             $content = json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

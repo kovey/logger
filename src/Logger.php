@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @description 日志管理类
+ * @description logger manager
  *
  * @package     Logger
  *
@@ -14,55 +14,55 @@ namespace Kovey\Logger;
 class Logger
 {
     /**
-     * @description INFO日志路径
+     * @description info logger directory
      *
      * @var string
      */
     private static string $infoPath;
 
     /**
-     * @description Exception日志路径
+     * @description exception logger directory
      *
      * @var string
      */
     private static string $exceptionPath;
 
     /**
-     * @description Error日志路径
+     * @description error logger directory
      *
      * @var string
      */
     private static string $errorPath;
 
     /**
-     * @description Warning日志路径
+     * @description warning logger directory
      *
      * @var string
      */
     private static string $warningPath;
 
     /**
-     * @description Busi log
+     * @description business logger directory
      *
      * @var string
      */
     private static string $busiPath;
 
     /**
-     * @description 日志分类
+     * @description logger category
      *
      * @var string
      */
     private static string $category = '';
 
     /**
-     * @description 设置日志路径
+     * @description set logger directory
      *
      * @param string $dir
      *
-     * @return null
+     * @return void
      */
-    public static function setLogPath(string $dir)
+    public static function setLogPath(string $dir) : void
     {
         self::$infoPath = $dir . '/info';
         if (!is_dir(self::$infoPath)) {
@@ -91,7 +91,7 @@ class Logger
     }
 
     /**
-     * @description 写入日志
+     * @description write info logger content into file
      *
      * @param int $line
      *
@@ -101,7 +101,7 @@ class Logger
      *
      * @return void
      */
-    public static function writeInfoLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeInfoLog(int $line, string $file, string | Array $msg, string $traceId = '') : void
     {
         go (function (int $line, string $file, string | Array $msg, string $traceId) {
             $content = array(
@@ -123,7 +123,7 @@ class Logger
     }
 
     /**
-     * @description 写入错误日志
+     * @description write error logger content into file
      *
      * @param int $line
      *
@@ -133,7 +133,7 @@ class Logger
      *
      * @return void
      */
-    public static function writeErrorLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeErrorLog(int $line, string $file, string | Array $msg, string $traceId = '') : void
     {
         go (function (int $line, string $file, string | Array $msg, string $traceId) {
             $content = array(
@@ -155,7 +155,7 @@ class Logger
     }
 
     /**
-     * @description 写入警告日志
+     * @description write warning logger content into file
      *
      * @param int $line
      *
@@ -167,7 +167,7 @@ class Logger
      *
      * @return void
      */
-    public static function writeWarningLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeWarningLog(int $line, string $file, string | Array $msg, string $traceId = '') : void
     {
         go (function (int $line, string $file, string | Array $msg, string $traceId) {
             $content = array(
@@ -189,7 +189,7 @@ class Logger
     }
 
     /**
-     * @description 写入异常日志
+     * @description write exception logger content into file
      *
      * @param int $line
      *
@@ -199,9 +199,9 @@ class Logger
      *
      * @param string $traceId
      *
-     * @return Array
+     * @return void
      */
-    public static function writeExceptionLog(int $line, string $file, \Throwable $e, string $traceId = '')
+    public static function writeExceptionLog(int $line, string $file, \Throwable $e, string $traceId = '') : void
     {
         go (function (int $line, string $file, \Throwable $e, string $traceId) {
             $content = array(
@@ -223,19 +223,19 @@ class Logger
     }
 
     /**
-     * @description 设置日志分类
+     * @description set logger category
      *
      * @param string $category
      *
-     * @return null
+     * @return void
      */
-    public static function setCategory(string $category)
+    public static function setCategory(string $category) : void
     {
         self::$category = $category;
     }
 
     /**
-     * @description 写入业务异常日志
+     * @description write business logger content into file
      *
      * @param int $line
      *
@@ -245,9 +245,9 @@ class Logger
      *
      * @param string $traceId
      *
-     * @return Array
+     * @return void
      */
-    public static function writeBusiException(int $line, string $file, \Throwable $e, string $traceId = '')
+    public static function writeBusiException(int $line, string $file, \Throwable $e, string $traceId = '') : void
     {
         go (function (int $line, string $file, \Throwable $e, string $traceId) {
             $content = array(
@@ -269,7 +269,7 @@ class Logger
     }
 
     /**
-     * @description 写入警告日志 sync
+     * @description write warning logger content into file with sync
      *
      * @param int $line
      *
@@ -281,7 +281,7 @@ class Logger
      *
      * @return void
      */
-    public static function writeWarningLogSync(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeWarningLogSync(int $line, string $file, string | Array $msg, string $traceId = '') : void
     {
         $content = array(
             'time' => date('Y-m-d H:i:s'),
