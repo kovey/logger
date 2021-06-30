@@ -42,20 +42,22 @@ class Db
      *
      * @param float $spentTime
      */
-    public static function write(string $sql, float $spentTime) : void
+    public static function write(string $sql, float $spentTime, string $traceId = '', string $spanId = '') : void
     {
         go (function (string $sql, float $spentTime) {
             $spentTime = round($spentTime * 1000, 2) . 'ms';
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'sql' => $sql,
-                'delay'  => $spentTime
+                'delay'  => $spentTime,
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$logDir . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $sql, $spentTime);
+        }, $sql, $spentTime, $traceId, $spanId);
     }
 }
