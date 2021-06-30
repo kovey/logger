@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @description db logger
+ * @description redis logger
  *
  * @package     Logger
  *
@@ -11,7 +11,7 @@
  */
 namespace Kovey\Logger;
 
-class Db
+class Redis
 {
     /**
      * @description log dir
@@ -34,9 +34,11 @@ class Db
     }
 
     /**
-     * @description write logger
+     * @description write log
      *
-     * @param string $sql
+     * @param string $command
+     *
+     * @param Array $params
      *
      * @param mixed $result
      *
@@ -48,13 +50,14 @@ class Db
      *
      * @return void
      */
-    public static function write(string $sql, mixed $result, float $spentTime, string $traceId = '', string $spanId = '') : void
+    public static function write(string $command, Array $params, mixed $result, float $spentTime, string $traceId = '', string $spanId = '') : void
     {
-        go (function (string $sql, mixed $result, float $spentTime, string $traceId, string $spanId) {
+        go (function (string $command, Array $params, mixed $result, float $spentTime, string $traceId, string $spanId) {
             $spentTime = round($spentTime * 1000, 2) . 'ms';
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
-                'sql' => $sql,
+                'command' => $command,
+                'params' => $params,
                 'delay'  => $spentTime,
                 'traceId' => $traceId,
                 'spanId' => $spanId,
@@ -65,6 +68,6 @@ class Db
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $sql, $result, $spentTime, $traceId, $spanId);
+        }, $command, $params, $result, $spentTime, $traceId, $spanId);
     }
 }
