@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @description db log
+ * @description redis log
  *
  * @package     Logger
  *
@@ -11,7 +11,7 @@
  */
 namespace Kovey\Logger;
 
-class Db
+class Redis
 {
     /**
      * @description logger directory
@@ -29,7 +29,7 @@ class Db
      */
     public static function setLogDir(string $logDir) : void
     {
-        self::$logDir = $logDir . '/db';
+        self::$logDir = $logDir . '/redis';
         if (!is_dir(self::$logDir)) {
             mkdir(self::$logDir, 0777, true);
         }
@@ -42,13 +42,14 @@ class Db
      *
      * @param float $spentTime
      */
-    public static function write(string $sql, float $spentTime, string $traceId = '', string $spanId = '') : void
+    public static function write(string $command, Array $params, float $spentTime, string $traceId = '', string $spanId = '') : void
     {
-        go (function (string $sql, float $spentTime, $traceId, $spanId) {
+        go (function (string $command, Array $params, float $spentTime, $traceId, $spanId) {
             $spentTime = round($spentTime * 1000, 2) . 'ms';
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
-                'sql' => $sql,
+                'command' => $command,
+                'params' => $params,
                 'delay'  => $spentTime,
                 'traceId' => $traceId,
                 'spanId' => $spanId
@@ -58,6 +59,6 @@ class Db
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $sql, $spentTime, $traceId, $spanId);
+        }, $command, $params, $spentTime, $traceId, $spanId);
     }
 }
