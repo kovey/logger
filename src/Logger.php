@@ -109,9 +109,9 @@ class Logger
      *
      * @return void
      */
-    public static function writeInfoLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeInfoLog(int $line, string $file, string | Array $msg, string $traceId = '', string $spanId = '')
     {
-        go (function (int $line, string $file, string | Array $msg, string $traceId) {
+        go (function (int $line, string $file, string | Array $msg, string $traceId, string $spanId) {
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'category' => self::$category,
@@ -120,14 +120,15 @@ class Logger
                 'trace' => '',
                 'line' => $line,
                 'file' => $file,
-                'traceId' => $traceId
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$infoPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $line, $file, $msg, $traceId);
+        }, $line, $file, $msg, $traceId, $spanId);
     }
 
     /**
@@ -141,9 +142,9 @@ class Logger
      *
      * @return void
      */
-    public static function writeErrorLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeErrorLog(int $line, string $file, string | Array $msg, string $traceId = '', string $spanId = '')
     {
-        go (function (int $line, string $file, string | Array $msg, string $traceId) {
+        go (function (int $line, string $file, string | Array $msg, string $traceId, string $spanId) {
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'category' => self::$category,
@@ -152,14 +153,15 @@ class Logger
                 'trace' => '',
                 'line' => $line,
                 'file' => $file,
-                'traceId' => $traceId
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$errorPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $line, $file, $msg, $traceId);
+        }, $line, $file, $msg, $traceId, $spanId);
     }
 
     /**
@@ -175,9 +177,9 @@ class Logger
      *
      * @return void
      */
-    public static function writeWarningLog(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeWarningLog(int $line, string $file, string | Array $msg, string $traceId = '', string $spanId = '')
     {
-        go (function (int $line, string $file, string | Array $msg, string $traceId) {
+        go (function (int $line, string $file, string | Array $msg, string $traceId, string $spanId) {
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'category' => self::$category,
@@ -186,14 +188,15 @@ class Logger
                 'trace' => '',
                 'line' => $line,
                 'file' => $file,
-                'traceId' => $traceId
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$warningPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $line, $file, $msg, $traceId);
+        }, $line, $file, $msg, $traceId, $spanId);
     }
 
     /**
@@ -209,9 +212,9 @@ class Logger
      *
      * @return Array
      */
-    public static function writeExceptionLog(int $line, string $file, \Throwable $e, string $traceId = '')
+    public static function writeExceptionLog(int $line, string $file, \Throwable $e, string $traceId = '', string $spanId = '')
     {
-        go (function (int $line, string $file, \Throwable $e, string $traceId) {
+        go (function (int $line, string $file, \Throwable $e, string $traceId, string $spanId) {
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'category' => self::$category,
@@ -220,14 +223,15 @@ class Logger
                 'trace' => $e->getTraceAsString(),
                 'line' => $line,
                 'file' => $file,
-                'traceId' => $traceId
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$exceptionPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $line, $file, $e, $traceId);
+        }, $line, $file, $e, $traceId, $spanId);
     }
 
     /**
@@ -255,9 +259,9 @@ class Logger
      *
      * @return Array
      */
-    public static function writeBusiException(int $line, string $file, \Throwable $e, string $traceId = '')
+    public static function writeBusiException(int $line, string $file, \Throwable $e, string $traceId = '', string $spanId = '')
     {
-        go (function (int $line, string $file, \Throwable $e, string $traceId) {
+        go (function (int $line, string $file, \Throwable $e, string $traceId, string $spanId) {
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'category' => self::$category,
@@ -266,14 +270,15 @@ class Logger
                 'trace' => $e->getTraceAsString(),
                 'line' => $line,
                 'file' => $file,
-                'traceId' => $traceId
+                'traceId' => $traceId,
+                'spanId' => $spanId
             );
             file_put_contents(
                 self::$exceptionPath . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $line, $file, $e, $traceId);
+        }, $line, $file, $e, $traceId, $spanId);
     }
 
     /**
@@ -289,7 +294,7 @@ class Logger
      *
      * @return void
      */
-    public static function writeWarningLogSync(int $line, string $file, string | Array $msg, string $traceId = '')
+    public static function writeWarningLogSync(int $line, string $file, string | Array $msg, string $traceId = '', string $spanId = '')
     {
         $content = array(
             'time' => date('Y-m-d H:i:s'),
@@ -299,7 +304,8 @@ class Logger
             'trace' => '',
             'line' => $line,
             'file' => $file,
-            'traceId' => $traceId
+            'traceId' => $traceId,
+            'spanId' => $spanId
         );
         file_put_contents(
             self::$warningPath . '/' . date('Y-m-d') . '.log',
