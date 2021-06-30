@@ -40,24 +40,33 @@ class Db
      *
      * @param string $sql
      *
+     * @param mixed $result
+     *
      * @param float $spentTime
+     *
+     * @param string $traceId
+     *
+     * @param string $spanId
+     *
+     * @return void
      */
-    public static function write(string $sql, float $spentTime, string $traceId = '', string $spanId = '') : void
+    public static function write(string $sql, mixed $result, float $spentTime, string $traceId = '', string $spanId = '') : void
     {
-        go (function (string $sql, float $spentTime, $traceId, $spanId) {
+        go (function (string $sql, mixed $result, float $spentTime, $traceId, $spanId) {
             $spentTime = round($spentTime * 1000, 2) . 'ms';
             $content = array(
                 'time' => date('Y-m-d H:i:s'),
                 'sql' => $sql,
                 'delay'  => $spentTime,
                 'traceId' => $traceId,
-                'spanId' => $spanId
+                'spanId' => $spanId,
+                'result' => $result
             );
             file_put_contents(
                 self::$logDir . '/' . date('Y-m-d') . '.log',
                 json_encode($content, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL,
                 FILE_APPEND
             );
-        }, $sql, $spentTime, $traceId, $spanId);
+        }, $sql, $result, $spentTime, $traceId, $spanId);
     }
 }
