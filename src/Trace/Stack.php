@@ -58,8 +58,12 @@ class Stack
         return $this;
     }
 
-    public function add(mixed $stack) : self
+    public function add(string | Array $stack) : self
     {
+        if (is_array($stack)) {
+            $stack = json_encode($stack);
+        }
+
         $this->stack[] = $stack;
         return $this;
     }
