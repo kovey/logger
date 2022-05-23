@@ -25,7 +25,7 @@ class Json
 
     public static function write(Array $logs) : void
     {
-        if (!is_dir(self::$logDir)) {
+        if (empty($logDir) || !is_dir(self::$logDir)) {
             return;
         }
 
