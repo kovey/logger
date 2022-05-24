@@ -102,7 +102,8 @@ class Stack
             'trace_id' => $this->traceId,
             'consumes' => json_encode($this->consumes),
             'drops' => json_encode($this->drops),
-            'stack' => implode('-->', $this->stack)
+            'stack' => implode('-->', $this->stack),
+            'create_time' => date('Y-m-d H:i:s')
         ));
     }
 }
