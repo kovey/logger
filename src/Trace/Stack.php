@@ -16,8 +16,6 @@ use Kovey\Logger\Json;
 #[\Attribute]
 class Stack
 {
-    private string $appId;
-
     private string $userId;
 
     private string $action;
@@ -38,12 +36,6 @@ class Stack
         $this->userId= '';
         $this->action = '';
         $this->traceId = '';
-    }
-
-    public function setAppId(string $appId) : self
-    {
-        $this->appId = $appId;
-        return $this;
     }
 
     public function setUserId(string $userId) : self
@@ -89,7 +81,7 @@ class Stack
     public function write() : void
     {
         Json::write(array(
-            'app_id' => $this->appId,
+            'app_id' => Json::getAppId(),
             'user_id' => $this->userId,
             'action' => $this->action,
             'trace_id' => $this->traceId,

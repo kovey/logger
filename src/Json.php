@@ -15,6 +15,18 @@ class Json
 {
     private static string $logDir;
 
+    private static string $appId;
+
+    public static function setAppId(string $appId) : void
+    {
+        self::$appId = $appId;
+    }
+
+    public static function getAppId() : string
+    {
+        return self::$appId;
+    }
+
     public static function setLogDir(string $logDir) : void
     {
         self::$logDir = $logDir;
@@ -25,7 +37,7 @@ class Json
 
     public static function write(Array $logs) : void
     {
-        if (empty($logDir) || !is_dir(self::$logDir)) {
+        if (empty(self::$logDir) || !is_dir(self::$logDir)) {
             return;
         }
 
