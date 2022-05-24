@@ -26,9 +26,15 @@ class Stack
 
     private Array $stack;
 
+    private Array $drops;
+
+    private Array $consumes;
+
     public function __construct()
     {
         $this->stack = array();
+        $this->drops = array();
+        $this->consumes = array();
         $this->userId= '';
         $this->action = '';
         $this->traceId = '';
@@ -58,6 +64,18 @@ class Stack
         return $this;
     }
 
+    public function setDrops(Array $drops) : self
+    {
+        $this->drops = $drops;
+        return $this;
+    }
+
+    public function setConsumes(Array $consumes) : self
+    {
+        $this->consumes = $consumes;
+        return $this;
+    }
+
     public function add(string | Array $stack) : self
     {
         if (is_array($stack)) {
@@ -75,6 +93,8 @@ class Stack
             'user_id' => $this->userId,
             'action' => $this->action,
             'trace_id' => $this->traceId,
+            'consumes' => json_encode($this->consumes),
+            'drops' => json_encode($this->drops),
             'stack' => implode('-->', $this->stack)
         ));
     }
