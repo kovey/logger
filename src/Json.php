@@ -13,9 +13,9 @@ namespace Kovey\Logger;
 
 class Json
 {
-    private static string $logDir;
+    private static string $logDir = '';
 
-    private static string $appId;
+    private static string $appId = '';
 
     public static function setAppId(string $appId) : void
     {

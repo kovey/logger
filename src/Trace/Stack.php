@@ -80,8 +80,13 @@ class Stack
 
     public function write() : void
     {
+        $appId = Json::getAppId();
+        if (empty($appId)) {
+            return;
+        }
+
         Json::write(array(
-            'app_id' => Json::getAppId(),
+            'app_id' => $appId,
             'user_id' => $this->userId,
             'action' => $this->action,
             'trace_id' => $this->traceId,
