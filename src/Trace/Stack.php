@@ -71,7 +71,7 @@ class Stack
     public function add(string | Array $stack) : self
     {
         if (is_array($stack)) {
-            $stack = json_encode($stack);
+            $stack = json_encode($stack, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
 
         $this->stack[] = $stack;
@@ -100,8 +100,8 @@ class Stack
             'user_id' => $this->userId,
             'action' => $this->action,
             'trace_id' => $this->traceId,
-            'consumes' => json_encode($this->consumes),
-            'drops' => json_encode($this->drops),
+            'consumes' => json_encode($this->consumes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'drops' => json_encode($this->drops, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             'stack' => implode('-->', $this->stack),
             'create_time' => date('Y-m-d H:i:s')
         ));
