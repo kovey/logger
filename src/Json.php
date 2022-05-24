@@ -42,7 +42,7 @@ class Json
         }
 
         go (function (Array $logs) : void {
-            file_put_contents(self::$logDir . '/' . date('Y-m-d') . '.log', json_encode($logs) . PHP_EOL, FILE_APPEND);
+            file_put_contents(self::$logDir . '/' . date('Y-m-d') . '.log', json_encode($logs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND);
         }, $logs);
     }
 }
