@@ -11,7 +11,7 @@
  */
 namespace Kovey\Logger\Trace;
 
-use Kovey\Logger\Logger;
+use Kovey\Logger\Json;
 
 #[\Attribute]
 class Stack
@@ -88,7 +88,7 @@ class Stack
 
     public function write() : void
     {
-        Logger::write(array(
+        Json::write(array(
             'app_id' => $this->appId,
             'user_id' => $this->userId,
             'action' => $this->action,
