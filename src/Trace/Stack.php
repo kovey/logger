@@ -78,8 +78,18 @@ class Stack
         return $this;
     }
 
-    public function write() : void
+    public function write(bool $ignoreUserId = false) : void
     {
+        if (empty($this->action)) {
+            return;
+        }
+
+        if (!$ignoreUserId) {
+            if (empty($this->userId)) {
+                return;
+            }
+        }
+
         $appId = Json::getAppId();
         if (empty($appId)) {
             return;
