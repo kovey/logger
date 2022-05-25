@@ -12,9 +12,10 @@
 namespace Kovey\Logger\Trace;
 
 use Kovey\Logger\Json;
+use Kovey\Logger\Event\EventInterface;
 
 #[\Attribute]
-class Stack
+class Stack implements StackInterface
 {
     private string $userId;
 
@@ -28,11 +29,14 @@ class Stack
 
     private Array $consumes;
 
+    private Array $events;
+
     public function __construct()
     {
         $this->stack = array();
         $this->drops = array();
         $this->consumes = array();
+        $this->events = array();
         $this->userId= '';
         $this->action = '';
         $this->traceId = '';
@@ -78,6 +82,17 @@ class Stack
         return $this;
     }
 
+    public function addEvent(EventInterface $event) : self
+    {
+        $event->setTraceId($this->traceId)
+              ->setAction($this->action)
+              ->setAppId(Json::getAppId())
+              ->setUserId($this->userId);
+
+        $this->events[] = $event;
+        return $this;
+    }
+
     public function write(bool $ignoreUserId = false) : void
     {
         if (empty($this->action)) {
@@ -105,5 +120,9 @@ class Stack
             'stack' => implode('-->', $this->stack),
             'create_time' => date('Y-m-d H:i:s')
         ));
+
+        if (!empty($this->events)) {
+            Json::writeEvent($this->events);
+        }
     }
 }
