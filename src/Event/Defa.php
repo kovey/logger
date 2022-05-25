@@ -11,7 +11,7 @@
  */
 namespace Kovey\Logger\Event;
 
-class Defa extends EventInterface
+class Defa implements EventInterface
 {
     private string $name;
 
