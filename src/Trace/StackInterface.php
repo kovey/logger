@@ -25,5 +25,5 @@ interface StackInterface
 
     public function addEvent(EventInterface $event) : self;
 
-    public function write(bool $ignoreUserId = false) : self;
+    public function write(bool $ignoreUserId = false) : void;
 }
