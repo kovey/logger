@@ -113,7 +113,9 @@ class Defa implements EventInterface
             'ext1' => $this->ext1,
             'ext2' => $this->ext2,
             'ext3' => $this->ext3,
-            'ext4' => json_encode($this->ext4, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+            'ext4' => json_encode($this->ext4, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'create_time' => date('Y-m-d H:i:s'),
+            'create_date' => date('Y-m-d')
         );
     }
 

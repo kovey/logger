@@ -118,7 +118,8 @@ class Stack implements StackInterface
             'consumes' => json_encode($this->consumes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
             'drops' => json_encode($this->drops, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             'stack' => implode('-->', $this->stack),
-            'create_time' => date('Y-m-d H:i:s')
+            'create_time' => date('Y-m-d H:i:s'),
+            'create_date' => date('Y-m-d')
         ));
 
         if (!empty($this->events)) {
